@@ -1,26 +1,35 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import SignIn from './views/Login/Login'
+import Main from './views/Main'
+import {
+    BrowserRouter as Router,
+    Redirect,
+    Route
+} from "react-router-dom";
+import './assets/css/main.css'
+import {Provider} from "react-redux";
+import configureStore, {history} from './store'
+import {ConnectedRouter} from 'connected-react-router';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const store = configureStore()
+
+function App(props) {
+    return (
+        <Provider store={store}>
+            <ConnectedRouter history={history}>
+                <div className="App">
+                    <Router>
+                        <Route path="/" exact component={SignIn}/>
+                        <Route path="/main" component={Main}/>
+                        {/*<Redirect from="/" to="/"/>*/}
+                    </Router>
+
+                </div>
+            </ConnectedRouter>
+        </Provider>
+    );
 }
 
 export default App;
